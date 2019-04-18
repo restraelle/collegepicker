@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CollegePicker | {% block title %}{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+</head>
+<body>
+    <div class="accent-bar"></div>
+    <div class="content">
+        <div class="logo-bar">
+            <a href="/">
+                <img id="logo" src="/static/images/logo.png">
+            </a>
+            <div class="logo-nav-bar">
+                <p class="button" style="top: 9px;">Login</p>
+            </div>
+        </div>
+        <div class="separator"></div>
+        <div class="nav-bar">
+            <div class="nav-bar-container">
+                <a href="/"><div class="nav-bar-item">Home</div></a>
+                <a href="/compare"><div class="nav-bar-item">Compare</div></a>
+                <a href="/colleges"><div class="nav-bar-item">Colleges</div></a>
+                <a href="/about"><div class="nav-bar-item">About</div></a>
+            </div>
+        </div>
+
+        <div class="body">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+    <div class="footer">
+        <div class="content">
+            <div class="footer-left">
+                <img src="/static/images/icon.png" style="filter: invert(1); width: 120px; margin: 0px 0px 20px 0px">
+                <p>CollegePicker Project</p>
+                <p>4700 Research Way</p>
+                <p>Lakeland, FL 33805</p>
+            </div>
+            <div class="footer-right">
+                <ul>
+                    <li>Home</li>
+                    <li>Colleges</li>
+                    <li>Compare</li>
+                    <li>About</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="/static/js/main.js"></script>
+</html>

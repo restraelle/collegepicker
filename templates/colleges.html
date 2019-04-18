@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}College Listing{% endblock %}
+
+{% block body %}
+    <h1>College Listing</h1>
+    {% for college in colleges %}
+
+    <div class="list-college">
+        <div class="list-college-image" style="background-image: url('{{ college.image_url }}')"></div>
+        <div class="list-college-container">
+            <h2 class="no-margin">{{ college.name }}</h2>
+            <p class="no-margin">{{ college.location_city }}, {{ college.location_region }}</p>
+            <p style="margin: 0px 0px 10px 0px">Established in {{ college.established_year }}</p>
+            <p class="no-margin"><b>Average GPA: </b>{{ college.minimum_gpa }}</p>
+            <p class="no-margin"><b>Average SAT: </b>{{ college.minimum_sat_total }}</p>
+        </div>
+    </div>
+
+    {% endfor %}
+
+{% endblock %}

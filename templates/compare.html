@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}Compare Colleges{% endblock %}
+
+{% block body %}
+
+    <h1>Compare Colleges</h1>
+    <p>Select 2 or more colleges to compare side by side.</p>
+    <div class="compare-item-box">
+        {% for college in colleges %}
+            <p class="compare-item flagged">{{ college.name }}</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
