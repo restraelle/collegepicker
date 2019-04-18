@@ -8,8 +8,20 @@
     <p>Select 2 or more colleges to compare side by side.</p>
     <div class="compare-item-box">
         {% for college in colleges %}
-            <p class="compare-item flagged">{{ college.name }}</p>
+            <p class="compare-item" id="{{ college.id }}">{{ college.name }}</p>
         {% endfor %}
     </div>
 
+    <div class="compare-table-box">
+        <div class="compare-table">
+            <div class="compare-table-attribute compare-table-picture"></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">College</p></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">Location</p></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">Year Established</p></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">Acceptance Rate</p></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">GPA Average</p></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">SAT Average</p></div>
+            <div class="compare-table-attribute"><p class="compare-table-attribute-title">ACT Average</p></div>
+        </div>
+    </div>
 {% endblock %}

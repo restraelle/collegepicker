@@ -63,6 +63,35 @@ def viewCompare():
     query = School.query.all()
     return render_template("compare.html", colleges=query)
 
+@app.route('/about', methods=['GET'])
+def viewAbout():
+    return render_template("about.html")
+
+@app.route('/api/get/college/<int:col>', methods=['GET'])
+def apiGetCollege(col):
+    ret = {}
+    try:
+        query = School.query.filter_by(id=col).first()
+        gpaCalc = query.minimum_gpa * 0.01
+        ret = {
+            "status": "success",
+            "id": query.id,
+            "name": query.name,
+            "location": query.location_city + ", " + query.location_region,
+            "established_year": query.established_year,
+            "image_url": query.image_url,
+            "acceptance_rate": query.acceptance_rate,
+            "minimum_gpa": "%.2f" % gpaCalc,
+            "minimum_sat": query.minimum_sat_total,
+            "minimum_act": query.minimum_act_total
+        }
+        return jsonify(ret)
+    except:
+        ret = {
+            "status": "failure: check log"
+        }
+        return jsonify(ret)
+
 def createCollegeData():
     colleges = []
     colleges.append(School(name="Harvard University",
@@ -73,7 +102,8 @@ def createCollegeData():
                            image_url="/static/images/harvard.jpg",
                            acceptance_rate=5,
                            minimum_gpa=404,
-                           minimum_sat_total=1550
+                           minimum_sat_total=1550,
+                           minimum_act_total=0
                            ))
     colleges.append(School(name="University of Central Florida",
                            location_city="Orlando",
@@ -83,7 +113,8 @@ def createCollegeData():
                            image_url="/static/images/ucf.jpg",
                            acceptance_rate=50,
                            minimum_gpa=392,
-                           minimum_sat_total=1320
+                           minimum_sat_total=1320,
+                           minimum_act_total = 28
                            ))
     colleges.append(School(name="Florida Southern College",
                            location_city="Lakeland",
@@ -93,7 +124,8 @@ def createCollegeData():
                            image_url="/static/images/fsc.jpg",
                            acceptance_rate=51,
                            minimum_gpa=370,
-                           minimum_sat_total=1195
+                           minimum_sat_total=1195,
+                           minimum_act_total = 26
                            ))
     colleges.append(School(name="Florida Institute of Technology",
                            location_city="Melbourne",
@@ -103,7 +135,8 @@ def createCollegeData():
                            image_url="/static/images/fit.jpg",
                            acceptance_rate=63,
                            minimum_gpa=358,
-                           minimum_sat_total=1290
+                           minimum_sat_total=1290,
+                           minimum_act_total=26
                            ))
     colleges.append(School(name="University of South Florida",
                            location_city="Tampa",
@@ -113,7 +146,8 @@ def createCollegeData():
                            image_url="/static/images/usf.jpg",
                            acceptance_rate=45,
                            minimum_gpa=394,
-                           minimum_sat_total=1230
+                           minimum_sat_total=1230,
+                           minimum_act_total=26
                            ))
     colleges.append(School(name="Florida State University",
                            location_city="Tallahassee",
@@ -123,7 +157,9 @@ def createCollegeData():
                            image_url="/static/images/fsu.jpg",
                            acceptance_rate=56,
                            minimum_gpa=391,
-                           minimum_sat_total=1290
+                           minimum_sat_total=1290,
+                           minimum_act_total=27
+
                            ))
     colleges.append(School(name="Florida Polytechnic University",
                            location_city="Lakeland",
@@ -133,7 +169,8 @@ def createCollegeData():
                            image_url="/static/images/fpu.jpg",
                            acceptance_rate=55,
                            minimum_gpa=352,
-                           minimum_sat_total=1269
+                           minimum_sat_total=1269,
+                           minimum_act_total=27
                            ))
     colleges.append(School(name="Florida Agricultural and Mechanical University",
                            location_city="Tallahassee",
@@ -143,7 +180,8 @@ def createCollegeData():
                            image_url="/static/images/famu.jpg",
                            acceptance_rate=46,
                            minimum_gpa=336,
-                           minimum_sat_total=1077
+                           minimum_sat_total=1077,
+                           minimum_act_total=22
                            ))
     colleges.append(School(name="University of North Florida",
                            location_city="Jacksonville",
@@ -153,7 +191,8 @@ def createCollegeData():
                            image_url="/static/images/unf.jpg",
                            acceptance_rate=59,
                            minimum_gpa=373,
-                           minimum_sat_total=640
+                           minimum_sat_total=640,
+                           minimum_act_total=26
                            ))
     colleges.append(School(name="University of Florida",
                            location_city="Gainesville",
@@ -163,7 +202,8 @@ def createCollegeData():
                            image_url="/static/images/uf.jpg",
                            acceptance_rate=38,
                            minimum_gpa=376,
-                           minimum_sat_total=1240
+                           minimum_sat_total=1240,
+                           minimum_act_total=32
                            ))
 
     db.session.add_all(colleges)
