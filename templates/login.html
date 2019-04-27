@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block body %}
+
+<style>
+    .body {
+        background-image: url('/static/images/poly2.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 3px;
+    }
+</style>
+<div class="login">
+    <h1 class="login-label" style="margin: 0px 0px 20px 0px;">Login</h1>
+    <h6 class="login-label">E-mail</h6>
+    <input class="login-input" id="input-login-email" type="text">
+    <h6 class="login-label">Password</h6>
+    <input class="login-input" id="input-login-password" type="password">
+    <div class="button force-center" id="input-login-button">Log In</div>
+    <a href="/signup" class="signup-link"><p><i>Not registered? Sign up!</i></p></a>
+</div>
+{% endblock %}

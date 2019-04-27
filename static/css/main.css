@@ -8,6 +8,20 @@
             left: 0px;
         }
     }
+    @keyframes animFlashBox {
+        0% {
+            top: 100%;
+        }
+        10% {
+            top: calc(100% - 50px);
+        }
+        90% {
+            top: calc(100% - 50px);
+        }
+        100% {
+            top: 100%;
+        }
+    }
     html, body {
         margin: 0;
     }
@@ -17,6 +31,19 @@
     a {
         color: inherit;
         text-decoration: none;
+    }
+    .force-center {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .hide {
+        display: none;
+    }
+    .show--inline {
+        display: inline !important;
+    }
+    .show {
+        display: block !important;
     }
     .content {
         max-width: 1024px;
@@ -68,6 +95,9 @@
     .button:hover {
         cursor: pointer;
     }
+    .button img {
+        height: 10px;
+    }
     .nav-bar {
         width: 20%;
         height: auto;
@@ -108,6 +138,7 @@
         float: right;
         padding: 0px 20px;
         overflow: auto;
+        margin: 0px 0px 10px 0px;
     }
     .half-block-button {
         width: 50%;
@@ -283,4 +314,76 @@
         top: 50%;
         transform: translateY(-50%);
         margin: 0;
+    }
+    .login {
+        width: 400px;
+        background-color: white;
+        box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.2);
+        margin: 170px auto;
+        border-radius: 4px;
+        padding: 40px;
+        box-sizing: border-box;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.5)
+    }
+    .login-label {
+        margin: 0;
+    }
+    .login-input {
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        border-radius: 4px;
+        width: 100%;
+        padding: 10px;
+        background-color: transparent;
+        box-sizing: border-box;
+        margin: 0px 0px 20px 0px;
+    }
+    .signup-link {
+        font-size: 12px;
+        color: rgb(150, 150, 150);
+        text-align: center;
+    }
+    #logout-button {
+        display: none;
+    }
+    #user-button-picture {
+        width: 40px;
+        height: 100%;
+        background-color: gold;
+    }
+    #nav-bar-user-content {
+        display: none;
+    }
+    #flash-bad {
+        background-color: #fc6358;
+        color: white;
+        position: fixed;
+        padding: 10px 20px;
+        border-radius: 2px;
+        z-index: 100;
+        top: 101%;
+        left: 50%;
+        transform: translateX(-50%);
+        user-select: none;
+        -moz-user-select: none;
+        animation-name: animFlashBox;
+        animation-duration: 4s;
+        animation-iteration-count: 1;
+    }
+    #flash-good {
+        background-color: #58fca7;
+        color: white;
+        position: fixed;
+        padding: 10px 20px;
+        border-radius: 2px;
+        z-index: 100;
+        top: 101%;
+        left: 50%;
+        transform: translateX(-50%);
+        user-select: none;
+        -moz-user-select: none;
+        animation-name: animFlashBox;
+        animation-duration: 4s;
+        animation-iteration-count: 1;
     }

@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ user.fname }}'s Profile{% endblock %}
+
+{% block body %}
+    <h1>Hi, {{ user.fname }} {{ user.lname }}!</h1>
+    <p>From {{ user.city }}, {{ user.region }}</p>
+{% endblock %}

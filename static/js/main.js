@@ -1,5 +1,18 @@
 var collegeCounter = 0;
 
+var isUserLoggedIn = false;
+var flashInterval;
+$(document).ready(function() {
+    $.get("/api/sync", function(data) {
+        if(data['isLoggedIn'] == true) {
+            $("#user-button").text(data['user_email']);
+            $("#user-button-link").attr('href', "/profile");
+            $("#logout-button").addClass("show--inline");
+            $("#nav-bar-user-content").addClass("show");
+        }
+    });
+});
+
 $(".compare-item").on("click", function() {
     id = $(this).attr("id");
     colData = null;
@@ -27,5 +40,68 @@ $(".compare-item").on("click", function() {
             });
         }
     }
-
 });
+
+$("#input-signup-button").click(function() {
+    var fname = $("#input-login-fname").val();
+    var lname = $("#input-login-lname").val();
+    var city = $("#input-login-city").val();
+    var region = $("#input-login-region").val();
+    var email = $("#input-login-email").val();
+    var password = $("#input-login-password").val();
+    var data = {
+        "fname": fname.toString(),
+        "lname": lname.toString(),
+        "city": city.toString(),
+        "region": region.toString(),
+        "email": email.toString(),
+        "password": password.toString()
+    };
+
+    var dataString = JSON.stringify(data);
+    $.ajax({
+        url: '/api/signup',
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        contentType: "application/JSON, charset=utf-8",
+        success: function(data) {
+            alert("Response: " + data['status']);
+        }
+    });
+});
+
+$("#input-login-button").click(function() {
+    var email = $("#input-login-email").val();
+    var password = $("#input-login-password").val();
+    var data = {
+        "email": email.toString(),
+        "password": password.toString()
+    };
+
+    var dataString = JSON.stringify(data);
+    $.ajax({
+        url: '/api/login',
+        type: 'POST',
+        data: dataString,
+        dataType: 'json',
+        contentType: "application/JSON, charset=utf-8",
+        success: function(data) {
+            if(data['status'] == "failure - incorrect password") {
+                flash("Incorrect password. Please try again.", "bad");
+            }
+            if(data['status'] == "success") {
+                flash("Successfully logged in.", "good");
+                window.location.href = "/";
+            }
+        }
+    });
+});
+
+function flash(text, type) {
+    if(type == "bad") {
+        $("body").prepend('<div id="flash-bad">' + text + '</div>');
+    } else {
+        $("body").prepend('<div id="flash-good">' + text + '</div>');
+    }
+}

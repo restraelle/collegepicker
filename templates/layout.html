@@ -15,7 +15,12 @@
                 <img id="logo" src="/static/images/logo.png">
             </a>
             <div class="logo-nav-bar">
-                <p class="button" style="top: 9px;">Login</p>
+                <a id="user-button-link" href="/login">
+                    <p class="button" id="user-button" style="top: 9px;">Login</p>
+                </a>
+                <a href="/logout">
+                    <p class="button" id="logout-button" style="top: 9px;"><img src="/static/images/exit.png"></p>
+                </a>
             </div>
         </div>
         <div class="separator"></div>
@@ -24,6 +29,10 @@
                 <a href="/"><div class="nav-bar-item">Home</div></a>
                 <a href="/compare"><div class="nav-bar-item">Compare</div></a>
                 <a href="/colleges"><div class="nav-bar-item">Colleges</div></a>
+                <div id="nav-bar-user-content">
+                    <a href="/addcolleges"><div class="nav-bar-item">Add College</div></a>
+                    <a href="/profile"><div class="nav-bar-item">Profile</div></a>
+                </div>
                 <a href="/about"><div class="nav-bar-item">About</div></a>
             </div>
         </div>
@@ -49,7 +58,7 @@
                     <a href="/about"><li>About</li></a>
                 </ul>
             </div>
-            <div style="width: 100%; height: 30px; float: left; text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.3); margin: 20px 0px 0px 0px;">(c) 2019 CollegePicker. All rights reserved.</div>
+            <div style="width: 100%; height: 30px; float: left; text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.3); margin: 20px 0px 0px 0px;">© 2019 CollegePicker. All rights reserved.</div>
         </div>
     </div>
 </body>

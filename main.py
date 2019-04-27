@@ -1,23 +1,35 @@
-from flask import Flask, render_template, app, request, jsonify
+from flask import Flask, render_template, app, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, current_user, login_required, logout_user
+import pdb
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///collegeproject.db"
+app.secret_key = "ABAAIIA)@@@@)@!!(@219129ja"
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
+@login_manager.user_loader
+def loadUser(user_id):
+    return User.query.filter_by(id=user_id).first()
 
-class User(db.Model):
-    uid = db.Column(db.Integer, primary_key=True)
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     token = db.Column(db.String(100))
-
+    fname = db.Column(db.String(50))
+    lname = db.Column(db.String(50))
+    city = db.Column(db.String(50))
+    region = db.Column(db.String(50))
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
-    userid = db.Column(db.Integer, ForeignKey(User.uid), primary_key=True)
+    userid = db.Column(db.Integer, ForeignKey(User.id), primary_key=True)
     firstname = db.Column(db.String(40))
     middlename = db.Column(db.String(40))
     lastname = db.Column(db.String(40))
@@ -47,6 +59,7 @@ class School(db.Model):
     minimum_sat_total = db.Column(db.Integer)
     minimum_act_total = db.Column(db.Integer)
 
+
 @app.route('/')
 def viewIndex():
     return render_template("index.html")
@@ -67,9 +80,79 @@ def viewCompare():
 def viewAbout():
     return render_template("about.html")
 
+@app.route('/signup', methods=['GET'])
+def viewSignup():
+    return render_template("signup.html")
+
+@app.route('/login', methods=['GET'])
+def viewLogin():
+    return render_template("login.html")
+
+@app.route('/logout')
+def viewLogout():
+    logout_user()
+    return redirect('/')
+
+@app.route('/api/signup', methods=['POST'])
+def apiSignUp():
+    try:
+        data = request.get_json()
+        u = User(fname=data['fname'],
+                 lname=data['lname'],
+                 city=data['city'],
+                 region=data['region'],
+                 email=data['email'],
+                 password=generate_password_hash(data['password']))
+        db.session.add(u)
+        db.session.commit()
+        ret = {"status": "success"}
+        return jsonify(ret)
+    except:
+        ret = {"status": "failure"}
+        return jsonify(ret)
+
+@app.route('/api/login', methods=['POST'])
+def apiLogin():
+    try:
+        data = request.get_json()
+        u = User.query.filter_by(email=data['email']).first()
+
+        if(u):
+            valid = check_password_hash(str(u.password), data['password'])
+            if(valid == True):
+                print("User successfully validated.")
+                login_user(u)
+                ret = {"status": "success"}
+                return jsonify(ret)
+            else:
+                ret = {"status": "failure - incorrect password"}
+                return jsonify(ret)
+        else:
+            ret = {"status": "failure - email not found"}
+            return jsonify(ret)
+    except:
+        ret = {"status": "failure - check sys log"}
+        return jsonify(ret)
+
+@app.route('/api/sync', methods=['GET'])
+def apiSync():
+    isLoggedIn = not current_user.is_anonymous
+    ret = {
+        "isLoggedIn": isLoggedIn,
+    }
+    if(isLoggedIn):
+        ret['user_email'] = current_user.email
+
+    return jsonify(ret)
+
+
+@app.route('/profile', methods=['GET'])
+@login_required
+def viewProfile():
+    return render_template("profile.html", user=current_user)
+
 @app.route('/api/get/college/<int:col>', methods=['GET'])
 def apiGetCollege(col):
-    ret = {}
     try:
         query = School.query.filter_by(id=col).first()
         gpaCalc = query.minimum_gpa * 0.01

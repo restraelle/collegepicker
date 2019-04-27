@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+<div class="login">
+    <h1 class="login-label" style="margin: 0px 0px 20px 0px;">Sign Up</h1>
+    <h6 class="login-label">First Name</h6>
+    <input class="login-input" id="input-login-fname" type="text">
+    <h6 class="login-label">Last Name</h6>
+    <input class="login-input" id="input-login-lname" type="text">
+    <h6 class="login-label">City</h6>
+    <input class="login-input" id="input-login-city" type="text">
+    <h6 class="login-label">Region</h6>
+    <input class="login-input" id="input-login-region" type="text">
+    <h6 class="login-label">E-mail</h6>
+    <input class="login-input" id="input-login-email" type="text">
+    <h6 class="login-label">Password</h6>
+    <input class="login-input" id="input-login-password" type="password">
+    <div class="button force-center" id="input-signup-button">Sign Up</div>
+</div>
+{% endblock %}
